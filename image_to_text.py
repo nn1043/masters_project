@@ -10,7 +10,7 @@ with open("image.png", "rb") as image:
             text_binary.write(i)
             new_line += 1
             if new_line >= 8:
-                text.write("\n")    # can be used to compare lines of binary
+                text_binary.write("\n")    # can be used to compare lines of binary
                 new_line = 0
     with open("text_base64.txt", "wb") as text_base64:
         text_base64.write(image_64)
