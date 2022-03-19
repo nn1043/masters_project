@@ -8,12 +8,16 @@ Creates a new bitmap file.
 
     # user inputs
     filename = input("Filename: ")
+    user_width = input("Width in pixels (min 1, max 9): ")
+    user_height = input("Height in pixels (min 1, max 9): ")
+    user_width = int(user_width)
+    user_height = int(user_height)
+
     print("From the bottom...")
-    row1 = input("First row: ")
-    row2 = input("Second row: ")
-    row3 = input("Third row: ")
-    row4 = input("Fourth row: ")
-    pixel_rows = [row1, row2, row3, row4]
+    pixel_rows = []
+    for row in range(user_height):
+        row_input = input("Pixels: ")
+        pixel_rows.append(row_input)
 
     # convert user input to hex
     image_data = ""
@@ -31,13 +35,19 @@ Creates a new bitmap file.
                 image_data = image_data + "FF FF FF"    # white
             else:
                 image_data = image_data + "00 00 00"    # error handler
+        for i in range(4 - ((user_width * 3) % 4)):
+            image_data = image_data + " 00"
 # i could let user manually type (FF FF FF) each pixel, not really sure what
 # the use is.
 
     # build hex string
+    dimensions = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09"]
+        # offset index 0, no other error checking
+
+                    # file size here. need change?
     header = "42 4D 4C 00 00 00 00 00 00 00 1A 00 00 00 0C 00 00 00"
-    width = "04 00" # use a list ['00', '01', ... '09'] and convert string to int,
-    height = "04 00"    # then use an index to grab proper header
+    width = dimensions[user_width] + " 00"
+    height = dimensions[user_height] + " 00"
     header_more = "01 00 18 00"
     padding = "00 00"   # fills out to 4 bytes (8 hex string)
     bitmap = header + width + height + header_more + image_data + padding
@@ -49,11 +59,13 @@ Creates a new bitmap file.
     bitmap = binascii.a2b_hex(bitmap)
 
     # write to user-define file
-    with open('%s'%filename, 'wb') as image_file:
+    with open('%s.bmp'%filename, 'wb') as image_file:
         image_file.write(bitmap)
 
     print("Done!\n")
 
+
+new_bitmap()
 
 """
 Breaking down the data:
@@ -88,6 +100,3 @@ white - FF FF FF
 padding = "00 00" - fills out to 4 bytes (8 hex string)
 
 """
-
-
-new_bitmap()
