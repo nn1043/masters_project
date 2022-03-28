@@ -35,8 +35,9 @@ Creates a new bitmap file.
                 image_data = image_data + "FF FF FF"    # white
             else:
                 image_data = image_data + "00 00 00"    # error handler
-        for i in range(4 - ((user_width * 3) % 4)):
-            image_data = image_data + " 00"
+        if (((user_width * 3) % 4) != 0):
+            for i in range(4 - ((user_width * 3) % 4)):
+                image_data = image_data + " 00"
 # i could let user manually type (FF FF FF) each pixel, not really sure what
 # the use is.
 
