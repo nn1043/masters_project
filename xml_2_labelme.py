@@ -22,7 +22,7 @@ for annotation in os.listdir(path_anno):
     xmax = float(root[4][5][2].text)
     ymax = float(root[4][5][3].text)
     bbox = [[xmin, ymin], [xmin, ymax], [xmax, ymax], [xmax, ymin]]
-    shapes.append( { "label":"LICENSE_PLATE", "points":bbox, "group_id":None, "shape_type":"polygon", "flags":{} } )
+    shapes.append( [{ "label":"LICENSE_PLATE", "points":bbox, "group_id":None, "shape_type":"polygon", "flags":{} }] )
 
 image_binary = []
 path_images = "/home/nicholas/Downloads/images/"
